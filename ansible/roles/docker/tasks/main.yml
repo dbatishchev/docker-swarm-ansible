@@ -30,24 +30,17 @@
     - Restart Docker
   tags: [docker]
 
-- name: Docker init file
-  template: src=docker-init.j2 dest=/etc/init/docker.conf
-  when: etc_init.stat.exists == true
-  notify:
-    - Restart Docker
-  tags: [docker]
-
 - name: Check if systemd exists
   stat: path=/usr/lib/systemd/system/
   register: systemd_check
   tags: [docker]
 
-- name: Docker systemd default config file
-  template: src=docker-sysconfig.j2 dest=/etc/sysconfig/docker
-  when: systemd_check.stat.exists == true
-  notify:
-    - Restart Docker
-  tags: [docker]
+#- name: Docker systemd default config file
+#  template: src=docker-sysconfig.j2 dest=/etc/sysconfig/docker
+#  when: systemd_check.stat.exists == true
+#  notify:
+#    - Restart Docker
+#  tags: [docker]
 
 - name: Docker systemd file
   template: src=docker-service.j2 dest=/lib/systemd/system/docker.service backup=yes
