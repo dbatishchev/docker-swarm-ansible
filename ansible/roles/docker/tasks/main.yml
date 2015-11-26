@@ -2,3 +2,56 @@
   get_url: >
     url=https://get.docker.com/
   tags: [docker]
+
+- name: Change ufw forward policy to ACCEPT
+  command: sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/g' /etc/default/ufw
+  when: docker_listen_tcp == True
+  tags: [docker]
+
+- name: Reload ufw
+  command: ufw reload
+  when: docker_listen_tcp == True
+  tags: [docker]
+
+- name: Allow incomming tcp traffic on {{docker_listen_port}}
+  command: ufw allow {{docker_listen_port}}/tcp
+  when: docker_listen_tcp == True
+  tags: [docker]
+
+- name: Check if /etc/init exists
+  stat: path=/etc/init/
+  register: etc_init
+  tags: [docker]
+
+- name: Docker upstart default config file
+  template: src=docker-defaults.j2 dest=/etc/default/docker
+  when: etc_init.stat.exists == true
+  notify:
+    - Restart Docker
+  tags: [docker]
+
+- name: Docker init file
+  template: src=docker-init.j2 dest=/etc/init/docker.conf
+  when: etc_init.stat.exists == true
+  notify:
+    - Restart Docker
+  tags: [docker]
+
+- name: Check if systemd exists
+  stat: path=/usr/lib/systemd/system/
+  register: systemd_check
+  tags: [docker]
+
+- name: Docker systemd default config file
+  template: src=docker-sysconfig.j2 dest=/etc/sysconfig/docker
+  when: systemd_check.stat.exists == true
+  notify:
+    - Restart Docker
+  tags: [docker]
+
+- name: Docker systemd file
+  template: src=docker-service.j2 dest=/lib/systemd/system/docker.service backup=yes
+  when: systemd_check.stat.exists == true
+  notify:
+    - Restart Docker
+  tags: [docker]
