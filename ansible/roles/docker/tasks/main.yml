@@ -1,7 +1,21 @@
-- name: Download binary
-  get_url: >
-    url=https://get.docker.com/
-  tags: [docker]
+- name: Install dependencies packages.
+  apt: name={{ item }} state=present
+  with_items:
+    - python-pip
+    - python-virtualenv
+
+- name: Check if docker is installed
+  command: bash -c "docker -v > /dev/null; echo $?;"
+  register: docker_installed
+
+- name: Download installer
+  get_url: url=https://get.docker.com/ dest=/tmp/docker_install.sh
+  register: get_docker
+  when: docker_installed.stdout != "0"
+
+- name: Run installer
+  command: '/bin/sh /tmp/docker_install.sh'
+  when: get_docker|changed and docker_installed != "0"
 
 - name: Change ufw forward policy to ACCEPT
   command: sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/g' /etc/default/ufw
