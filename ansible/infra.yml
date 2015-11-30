@@ -1,0 +1,5 @@
+- include: compose.yml
+#- include: swarm.yml
+#- include: nginx.yml
+#- include: consul.yml
+#- include: teamcity.yml
