@@ -14,7 +14,7 @@
       - 8400:8400
       - 8500:8500
       - 8600:53/udp
-      - 192.168.50.15:53:53/udp
+      - {{ ip }}:53:53/udp
     command: -server -advertise {{ ip }} -bootstrap -log-level debug
   tags: [consul]
 
