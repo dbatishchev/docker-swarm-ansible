@@ -1,0 +1,9 @@
+service:
+  image: google/nodejs-hello
+  ports:
+    - 8080
+  dns:
+    - 192.168.50.100
+  environment:
+    SERVICE_NAME: service
+    SERVICE_TAGS: route-http

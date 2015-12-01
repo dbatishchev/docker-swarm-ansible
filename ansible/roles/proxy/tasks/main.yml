@@ -1,0 +1,2 @@
+- name: check or build image
+  docker_image: path="/path/to/build/dir" name="my/app" state=present
