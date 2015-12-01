@@ -65,3 +65,13 @@
   notify:
     - Restart Docker
   tags: [docker]
+
+- name: Python-pip is present
+  apt:
+    name: python-pip
+    state: present
+  tags: [docker]
+
+- name: Docker-py is present
+  pip: name=docker-py version=0.4.0 state=present
+  tags: [docker]
