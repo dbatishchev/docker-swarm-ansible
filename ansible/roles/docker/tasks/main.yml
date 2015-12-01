@@ -9,7 +9,10 @@
   register: docker_installed
 
 - name: Download installer
-  command: curl https://get.docker.com/ > /tmp/docker_install.sh
+  shell: >
+    curl -L \
+    https://get.docker.com/ \
+    > /tmp/docker_install.sh
   register: get_docker
   when: docker_installed.stdout != "0"
 
