@@ -20,7 +20,7 @@
     ports:
       - 80:80
     env:
-      CONSUL_URL: {{ ip }}:8500
+      CONSUL_URL: "{{ ip }}:8500"
       SERVICE_NAME: nginx
     volumes:
       - /data/apllication/nginx:/etc/consul-template:ro
