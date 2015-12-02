@@ -1,0 +1,4 @@
+files: [
+  { src: "app.conf", dest_dir: "/data/apllication/nginx/conf", dest_file: "app.conf", mode: 755 },
+  { src: "app.ctmpl", dest_dir: "/data/apllication/nginx/templates", dest_file: "app.ctmpl", mode: 755 }
+]

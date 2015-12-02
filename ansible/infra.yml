@@ -1,6 +1,6 @@
 - include: compose.yml
 - include: consul.yml
-#- include: swarm.yml
+- include: swarm.yml
 #- include: nginx.yml
 #- include: consul.yml
 #- include: teamcity.yml
