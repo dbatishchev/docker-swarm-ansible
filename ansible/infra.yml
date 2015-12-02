@@ -2,6 +2,6 @@
 - include: consul.yml
 - include: swarm.yml
 - include: proxy.yml
-#- include: application.yml
+- include: application.yml
 #- include: registry.yml
 #- include: teamcity.yml

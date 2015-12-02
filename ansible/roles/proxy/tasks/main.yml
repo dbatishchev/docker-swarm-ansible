@@ -23,7 +23,7 @@
       CONSUL_URL: "{{ ip }}:8500"
       SERVICE_NAME: nginx
     volumes:
-      - /data/apllication/nginx:/etc/consul-template:ro
+      - /data/application/nginx:/etc/consul-template:ro
   tags: [proxy]
 
 #nginx:
