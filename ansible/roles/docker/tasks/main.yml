@@ -26,10 +26,18 @@
 
 - name: Docker upstart default config file
   template: src=docker-defaults.j2 dest=/etc/default/docker
-#  when: etc_init.stat.exists == true
-  notify:
-    - Restart Docker
+#  notify:
+#    - Restart Docker
   tags: [docker]
+
+- name: Stop Docker
+  shell: service docker stop
+  tags: [docker]
+
+- name: Start Docker
+  shell: service docker start
+  tags: [docker]
+
 
 #- name: Change ufw forward policy to ACCEPT
 #  command: sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/g' /etc/default/ufw

@@ -1,7 +1,10 @@
-- include: compose.yml
-- include: consul.yml
-- include: swarm.yml
-- include: proxy.yml
-- include: application.yml
-#- include: registry.yml
-#- include: teamcity.yml
+- hosts: compose
+  remote_user: vagrant
+  sudo: yes
+  roles:
+    - docker
+    - compose
+    - consul
+    - swarm
+    - proxy
+    - application
