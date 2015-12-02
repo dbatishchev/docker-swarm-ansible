@@ -1,6 +1,5 @@
-- hosts: consul
-  serial: 1
+- hosts: docker
   remote_user: vagrant
   sudo: yes
   roles:
-    - consul
+    - docker

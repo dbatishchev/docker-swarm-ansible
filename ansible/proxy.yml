@@ -3,6 +3,4 @@
   remote_user: vagrant
   sudo: yes
   roles:
-    - swarm
-    - consul
     - proxy

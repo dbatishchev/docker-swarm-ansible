@@ -11,7 +11,7 @@
   docker:
     name: swarm-master
     image: swarm
-    ports: 2375:2375
+    ports: 8333:2375
     command: manage consul://{{ ip }}:8500/swarm
     env:
       SERVICE_ID: swarm-master
