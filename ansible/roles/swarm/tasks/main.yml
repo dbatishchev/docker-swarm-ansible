@@ -3,6 +3,7 @@
     name: swarm-node
     image: swarm
     command: join --addr={{ ip }}:2375 consul://{{ ip }}:8500/swarm
+    docker_url: 0.0.0.0:2375
   when: not swarm_master is defined
   tags: [swarm]
 
@@ -14,5 +15,6 @@
     command: manage consul://{{ ip }}:8500/swarm
     env:
       SERVICE_ID: swarm-master
+    docker_url: 0.0.0.0:2375
   when: swarm_master is defined
   tags: [swarm]
