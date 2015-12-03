@@ -26,7 +26,7 @@
 
 - name: Docker upstart default config file
   template: src=docker-defaults.j2 dest=/etc/default/docker
-  when: etc_init.stat.exists == true
+#  when: etc_init.stat.exists == true
   notify:
     - Restart Docker
   tags: [docker]
