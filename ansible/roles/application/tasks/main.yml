@@ -10,6 +10,6 @@
   args:
     chdir: "{{ compose_dir }}"
   environment:
-    DOCKER_HOST: tcp://0.0.0.0:2375
+    DOCKER_HOST: "tcp://{{ ip }}:2375"
   register: result
   tags: [service]
