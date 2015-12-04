@@ -22,7 +22,6 @@
     env:
       CONSUL_URL: "{{ ip }}:8500"
       SERVICE_NAME: nginx
-    docker_url: "{{ ip }}:2375"
     volumes:
       - /data/application/nginx:/etc/consul-template:ro
   tags: [proxy]

@@ -15,7 +15,6 @@
       - 8500:8500
       - 8600:53/udp
       - 53:53/udp
-    docker_url: "{{ ip }}:2375"
     command: -server -advertise {{ ip }} -bootstrap -log-level debug
   when: consul_master_ip is not defined
   tags: [consul]
@@ -35,7 +34,6 @@
       - 8500:8500
       - 8600:53/udp
       - 53:53/udp
-    docker_url: "{{ ip }}:2375"
     command: -server -advertise {{ ip }} -join {{ consul_master_ip }} -log-level debug
   when: consul_master_ip is defined
   tags: [consul]
@@ -47,6 +45,5 @@
       - /var/run/docker.sock:/tmp/docker.sock
     hostname: "{{ hostname }}"
     image: gliderlabs/registrator
-    docker_url: "{{ ip }}:2375"
     command: -ip {{ ip }} consul://{{ ip }}:8500
   tags: [consul]

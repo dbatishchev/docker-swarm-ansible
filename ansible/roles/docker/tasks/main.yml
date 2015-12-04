@@ -19,25 +19,28 @@
   when: docker_installed.stdout != "0"
   tags: [docker]
 
+- name: Run installer
+  command: '/bin/sh /tmp/docker_install.sh'
+  when: get_docker|changed and docker_installed != "0"
+  tags: [docker]
+
 - name: Obsolete Docker init.d service is removed
   file:
     dest: /etc/init.d/docker
     state: absent
   tags: [docker]
 
-- name: Run installer
-  command: '/bin/sh /tmp/docker_install.sh'
-  when: get_docker|changed and docker_installed != "0"
-  tags: [docker]
-
-- name: Docker upstart default config file
+- name: Configuration is present
   template: src=docker-defaults.j2 dest=/etc/default/docker
-#  notify:
-#    - Restart Docker
+  register: config_result
+  when: not swarm_master is defined
   tags: [docker]
 
-- name: Restart Docker
-  service: name=docker state=restarted
+- name: Service is restarted
+  service:
+    name=docker
+    state=restarted
+  when: config_result|changed
   tags: [docker]
 
 #- name: Change ufw forward policy to ACCEPT
