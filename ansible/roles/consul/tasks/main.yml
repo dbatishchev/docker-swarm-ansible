@@ -1,6 +1,6 @@
 ---
 
-- name: Consul is running
+- name: Consul master is running
   docker:
     name: consul
     hostname: "{{ hostname }}"
@@ -19,7 +19,7 @@
   when: consul_master_ip is not defined
   tags: [consul]
 
-- name: Consul is running
+- name: Consul node is running
   docker:
     name: consul
     hostname: "{{ hostname }}"
@@ -35,10 +35,11 @@
       - 8600:53/udp
       - 53:53/udp
     command: -server -advertise {{ ip }} -join {{ consul_master_ip }} -log-level debug
+    docker_url: "{{ip}}:2375"
   when: consul_master_ip is defined
   tags: [consul]
 
-- name: Registrator is running
+- name: Registrator master is running
   docker:
     name: registrator
     volumes:
@@ -46,4 +47,17 @@
     hostname: "{{ hostname }}"
     image: gliderlabs/registrator
     command: -ip {{ ip }} consul://{{ ip }}:8500
+  when: consul_master_ip is not defined
+  tags: [consul]
+
+- name: Registrator node is running
+  docker:
+    name: registrator
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    hostname: "{{ hostname }}"
+    image: gliderlabs/registrator
+    command: -ip {{ ip }} consul://{{ ip }}:8500
+    docker_url: "{{ip}}:2375"
+  when: consul_master_ip is defined
   tags: [consul]
