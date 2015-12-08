@@ -1,4 +1,12 @@
 ---
+apt_key_url: https://apt.dockerproject.org/gpg
+apt_key_sig: 2C52609D
+apt_repository: deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main
+
+docker_pkg_name: docker-engine
+docker_apt_cache_valid_time: 600
+update_docker_package: yes
+
 docker_create_group: true
 docker_service_start_timeout: ''    # use system default value
 

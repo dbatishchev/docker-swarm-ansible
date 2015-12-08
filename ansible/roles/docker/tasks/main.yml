@@ -5,16 +5,33 @@
     - python-virtualenv
   tags: [docker]
 
-- name: Check if docker is installed
-  command: bash -c "docker -v > /dev/null; echo $?;"
-  register: docker_installed
+- name: Add Docker repository key
+  apt_key:
+    id: "{{ apt_key_sig }}"
+    url: "{{ apt_key_url }}"
+    state: present
+  register: add_repository_key
+  ignore_errors: true
   tags: [docker]
 
-- name: Install Docker
-  apt:
-    name: docker.io
+- name: Alternative | Add Docker repository key
+  shell: curl -sSL https://get.docker.com/gpg | sudo apt-key add -
+  when: add_repository_key|failed
+  tags: [docker]
+
+- name: Add Docker repository and update apt cache
+  apt_repository:
+    repo: "{{ apt_repository }}"
+    update_cache: yes
     state: present
-  when: docker_installed.stdout != "0"
+  tags: [docker]
+
+- name: Install (or update) docker package
+  apt:
+    name: "{{ docker_pkg_name }}"
+    state: "{{ 'latest' if update_docker_package else 'present' }}"
+    update_cache: yes
+    cache_valid_time: "{{ docker_apt_cache_valid_time }}"
   tags: [docker]
 
 #- name: Run installer
