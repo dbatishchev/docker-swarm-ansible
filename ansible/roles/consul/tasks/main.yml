@@ -38,7 +38,7 @@
   when: consul_master_ip is defined
   tags: [consul]
 
-- name: Registrator master is running
+- name: Registrator is running
   docker:
     name: registrator
     volumes:
@@ -47,15 +47,4 @@
     image: gliderlabs/registrator
     command: -ip {{ ip }} consul://{{ ip }}:8500
   when: consul_master_ip is not defined
-  tags: [consul]
-
-- name: Registrator node is running
-  docker:
-    name: registrator
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
-    hostname: "{{ hostname }}"
-    image: gliderlabs/registrator
-    command: -ip {{ ip }} consul://{{ ip }}:8500
-  when: consul_master_ip is defined
   tags: [consul]

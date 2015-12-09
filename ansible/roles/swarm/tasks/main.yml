@@ -1,3 +1,5 @@
+---
+
 - name: Swarm node is running
   docker:
     name: swarm-node

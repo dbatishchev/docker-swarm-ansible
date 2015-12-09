@@ -1,3 +1,5 @@
+---
+
 - name: Directories are present
   file:
     dest: "{{ item.dest_dir }}"
@@ -25,18 +27,3 @@
     volumes:
       - /data/application/nginx:/etc/consul-template:ro
   tags: [proxy]
-
-#nginx:
-#  image: 1science/nginx:consul
-#  links:
-#    - consul
-#  ports:
-#    - 80:80
-#  volumes:
-#    - ./nginx/consul-template:/etc/consul-template:ro
-#  environment:
-#    CONSUL_URL: 192.168.50.15:8500
-#    SERVICE_NAME: nginx
-
-#- name: Check or build image
-#  docker_image: path="/path/to/build/dir" name="my/proxy" state=present

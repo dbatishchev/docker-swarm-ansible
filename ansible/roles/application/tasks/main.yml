@@ -1,3 +1,5 @@
+---
+
 - name: Compose template is present
   template:
     src: "docker-compose.yml.j2"
