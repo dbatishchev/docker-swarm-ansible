@@ -35,7 +35,6 @@
       - 8600:53/udp
       - 53:53/udp
     command: -server -advertise {{ ip }} -join {{ consul_master_ip }} -log-level debug
-    docker_url: "{{ip}}:2375"
   when: consul_master_ip is defined
   tags: [consul]
 
@@ -58,6 +57,5 @@
     hostname: "{{ hostname }}"
     image: gliderlabs/registrator
     command: -ip {{ ip }} consul://{{ ip }}:8500
-    docker_url: "{{ip}}:2375"
   when: consul_master_ip is defined
   tags: [consul]

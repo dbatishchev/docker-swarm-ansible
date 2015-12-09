@@ -12,4 +12,5 @@ docker_service_start_timeout: ''    # use system default value
 
 docker_listen_tcp: True
 docker_listen_port: 2375
-docker_opts: '"-H tcp://{{ansible_eth1.ipv4.address}}:{{docker_listen_port}}"'
+#docker_opts: '"-H tcp://{{ansible_eth1.ipv4.address}}:{{docker_listen_port}} -H unix:///var/run/docker.sock"'
+docker_opts: '"-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"'
